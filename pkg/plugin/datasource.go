@@ -206,12 +206,12 @@ func (d *Datasource) QueryData(ctx context.Context, req *backend.QueryDataReques
 						eventTime = moonTimes.Rise
 					case "moonset":
 						eventTime = moonTimes.Set
-					case "noon":
+					case "noon": //FIXME: Always interpreted as UTC
 						// Set to 12:00:00 PM for noon
-						eventTime = time.Date(t.Year(), t.Month(), t.Day(), 12, 0, 0, 0, t.Location())
-					case "midnight":
+						eventTime = time.Date(t.Year(), t.Month(), t.Day(), 12, 0, 0, 0, time.Local)
+					case "midnight": //FIXME: Always interpreted as UTC
 						// Set to 12:00:00 AM for midnight
-						eventTime = time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+						eventTime = time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, time.Local)
 					}
 
 					// Check if eventTime is valid (not zero)
@@ -296,8 +296,8 @@ func (d *Datasource) CheckHealth(_ context.Context, req *backend.CheckHealthRequ
 	}
 
 	// Check for valid longitude
-	if d.longitude < -360 || d.longitude > 360 {
-		errors = append(errors, "Longitude not in range -360 to +360.")
+	if d.longitude < -180 || d.longitude > 180 {
+		errors = append(errors, "Longitude not in range -180 to +180.")
 	}
 
 	// Return errors if any, else return success
