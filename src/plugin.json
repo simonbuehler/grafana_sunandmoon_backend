@@ -1,15 +1,16 @@
 {
   "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
   "type": "datasource",
-  "name": "Sunandmoon",
-  "id": "00010111de-sunandmoon-datasource",
+  "name": "sunandmoon_backend",
+  "id": "simonbuehler-sunandmoon-datasource",
   "metrics": true,
   "backend": true,
+  "alerting": true,
   "executable": "gpx_sunandmoon",
   "info": {
     "description": "",
     "author": {
-      "name": "00010111 de"
+      "name": "simonbuehler"
     },
     "keywords": ["datasource"],
     "logos": {

@@ -1,7 +1,7 @@
 services:
   grafana:
     user: root
-    container_name: '00010111de-sunandmoon-datasource'
+    container_name: 'simonbuehler-sunandmoon-datasource'
 
     build:
       context: ./.config
@@ -18,13 +18,13 @@ services:
     cap_add:
       - SYS_PTRACE
     volumes:
-      - ./dist:/var/lib/grafana/plugins/00010111de-sunandmoon-datasource
+      - ./dist:/var/lib/grafana/plugins/simonbuehler-sunandmoon-datasource
       - ./provisioning:/etc/grafana/provisioning
-      - .:/root/00010111de-sunandmoon-datasource
+      - .:/root/simonbuehler-sunandmoon-datasource
 
     environment:
       NODE_ENV: development
-      GF_LOG_FILTERS: plugin.00010111de-sunandmoon-datasource:debug
+      GF_LOG_FILTERS: plugin.simonbuehler-sunandmoon-datasource:debug
       GF_LOG_LEVEL: debug
       GF_DATAPROXY_LOGGING: 1
-      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: 00010111de-sunandmoon-datasource
+      GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: simonbuehler-sunandmoon-datasource

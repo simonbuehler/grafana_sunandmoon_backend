@@ -39,7 +39,13 @@ export function QueryEditor({ query, onChange, onRunQuery }: Props) {
       {/* Set gap to 10 for better spacing between rows */}
       {/* Metrik-Auswahl */}
       <InlineField label="Metric">
-        <MultiSelect options={metrics} value={target} onChange={onMetricChange} placeholder="Select Metric" />
+        <MultiSelect
+          inputId="editor-metrics"
+          options={metrics}
+          value={target}
+          onChange={onMetricChange}
+          placeholder="Select Metric"
+        />
       </InlineField>
       {/* Latitude */}
       <InlineField label="Override Latitude" labelWidth={20}>

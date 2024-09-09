@@ -9,10 +9,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/00010111-de/sunandmoon/pkg/models"
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
 	"github.com/grafana/grafana-plugin-sdk-go/backend/instancemgmt"
 	"github.com/grafana/grafana-plugin-sdk-go/data"
+	"github.com/simonbuehler/sunandmoon_backend/pkg/models"
 	"github.com/sixdouglas/suncalc"
 )
 
@@ -35,8 +35,8 @@ func NewDatasource(_ context.Context, settings backend.DataSourceInstanceSetting
 	}
 
 	return &Datasource{
-		latitude:  jsonData.Latitude,  // Set the default latitude
-		longitude: jsonData.Longitude, // Set the default longitude
+		Latitude:  jsonData.Latitude,  // Set the default latitude
+		Longitude: jsonData.Longitude, // Set the default longitude
 	}, nil
 }
 
@@ -46,8 +46,8 @@ func (d *Datasource) Dispose() {
 
 // Datasource implements the Grafana backend Datasource
 type Datasource struct {
-	latitude  float64
-	longitude float64
+	Latitude  float64
+	Longitude float64
 }
 
 type queryModel struct {
@@ -73,7 +73,7 @@ func (d *Datasource) QueryData(ctx context.Context, req *backend.QueryDataReques
 
 		// Parse the query JSON to get metrics and annotations
 		metrics, annotations := getMetricsAndAnnotations(query)
-		latitude, longitude, _ := d.getLatLon(query)
+		latitude, longitude, _ := d.GetLatLon(query)
 
 		// Process each metric and add data points to frames
 		if len(metrics) > 0 {
@@ -246,7 +246,7 @@ func uint16Ptr(i uint16) *uint16 {
 	return &i
 }
 
-func (d *Datasource) getLatLon(query backend.DataQuery) (float64, float64, error) {
+func (d *Datasource) GetLatLon(query backend.DataQuery) (float64, float64, error) {
 	var qm queryModel
 	err := json.Unmarshal(query.JSON, &qm)
 	if err != nil {
@@ -291,12 +291,12 @@ func (d *Datasource) CheckHealth(_ context.Context, req *backend.CheckHealthRequ
 	var errors []string
 
 	// Check for valid latitude
-	if d.latitude < -90 || d.latitude > 90 {
+	if d.Latitude < -90 || d.Latitude > 90 {
 		errors = append(errors, "Latitude not in range -90 to +90.")
 	}
 
 	// Check for valid longitude
-	if d.longitude < -180 || d.longitude > 180 {
+	if d.Longitude < -180 || d.Longitude > 180 {
 		errors = append(errors, "Longitude not in range -180 to +180.")
 	}
 
