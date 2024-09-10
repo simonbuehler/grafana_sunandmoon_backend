@@ -35,22 +35,24 @@ var SunAndMoonMetrics = map[string]MetricDefinition{
 		Text:  "Percentage of the moon illuminated by the sun (0.0 - 1.0)",
 		Config: MetricConfig{
 			Unit:     "percentunit",
-			Decimals: 0,
+			Decimals: 1,
 		},
 	},
 	"moon_altitude": {
 		Title: "Moon altitude",
 		Text:  "Height of the moon in degrees (-90 - 90)",
 		Config: MetricConfig{
-			Unit: "degree",
-			Min:  0,
+			Unit:     "degree",
+			Min:      0,
+			Decimals: 1,
 		},
 	},
 	"moon_azimuth": {
 		Title: "Moon azimuth",
 		Text:  "Direction of the moon along the horizon in degrees (0 - 360)",
 		Config: MetricConfig{
-			Unit: "degree",
+			Unit:     "degree",
+			Decimals: 1,
 		},
 	},
 	"moon_distance": {
@@ -74,15 +76,17 @@ var SunAndMoonMetrics = map[string]MetricDefinition{
 		Title: "Sun azimuth",
 		Text:  "Direction of the sun along the horizon in degrees (0 - 360)",
 		Config: MetricConfig{
-			Unit: "degree",
+			Unit:     "degree",
+			Decimals: 1,
 		},
 	},
 	"sun_maximum_altitude": {
 		Title: "Maximum sun altitude of the day",
 		Text:  "Maximum height of the sun of the day (at solar noon) in degrees (-90 - 90)",
 		Config: MetricConfig{
-			Unit: "degree",
-			Min:  0,
+			Unit:     "degree",
+			Min:      0,
+			Decimals: 1,
 		},
 	},
 }
