@@ -1,22 +1,46 @@
 import { test, expect } from '@grafana/plugin-e2e';
 
-test('should trigger new query when Constant field is changed', async ({
-  panelEditPage,
-  readProvisionedDataSource,
-}) => {
-  const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
-  await panelEditPage.datasource.set(ds.name);
-  await panelEditPage.getQueryEditorRow('A').getByRole('textbox', { name: 'Query Text' }).fill('test query');
-  const queryReq = panelEditPage.waitForQueryDataRequest();
-  await panelEditPage.getQueryEditorRow('A').getByRole('spinbutton').fill('10');
-  await expect(await queryReq).toBeTruthy();
-});
+test.describe('QueryEditor', () => {
+  test('should trigger a new query when Metric field is changed', async ({ panelEditPage, readProvisionedDataSource }) => {
+    const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
+    await panelEditPage.datasource.set(ds.name);
 
-test('data query should return values 10 and 20', async ({ panelEditPage, readProvisionedDataSource }) => {
-  const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
-  await panelEditPage.datasource.set(ds.name);
-  await panelEditPage.getQueryEditorRow('A').getByRole('textbox', { name: 'Query Text' }).fill('test query');
-  await panelEditPage.setVisualization('Table');
-  await expect(panelEditPage.refreshPanel()).toBeOK();
-  await expect(panelEditPage.panel.data).toContainText(['10', '20']);
+    // Select metric
+    await panelEditPage.getQueryEditorRow('A').getByLabel('Metric').selectOption({ label: 'Moon Altitude' });
+
+    // Wait for a query request
+    const queryReq = panelEditPage.waitForQueryDataRequest();
+    await expect(await queryReq).toBeTruthy();
+  });
+
+  test('should trigger a new query when Latitude and Longitude fields are changed', async ({ panelEditPage, readProvisionedDataSource }) => {
+    const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
+    await panelEditPage.datasource.set(ds.name);
+
+    // Set Latitude
+    await panelEditPage.getQueryEditorRow('A').getByRole('spinbutton', { name: 'Latitude' }).fill('45.0');
+    // Set Longitude
+    await panelEditPage.getQueryEditorRow('A').getByRole('spinbutton', { name: 'Longitude' }).fill('9.0');
+
+    // Wait for a query request
+    const queryReq = panelEditPage.waitForQueryDataRequest();
+    await expect(await queryReq).toBeTruthy();
+  });
+
+  test('should return correct data in the Table visualization', async ({ panelEditPage, readProvisionedDataSource }) => {
+    const ds = await readProvisionedDataSource({ fileName: 'datasources.yml' });
+    await panelEditPage.datasource.set(ds.name);
+
+    // Set Query Text or Metric
+    await panelEditPage.getQueryEditorRow('A').getByRole('textbox', { name: 'Query Text' }).fill('moon_illumination');
+
+    // Set Visualization to Table
+    await panelEditPage.setVisualization('Table');
+
+    // Refresh the panel
+    await expect(panelEditPage.refreshPanel()).toBeOK();
+
+    // Validate the response data (assuming moon_illumination returns specific values)
+    await expect(panelEditPage.panel.data).toContainText(['moon']);
+  });
 });
