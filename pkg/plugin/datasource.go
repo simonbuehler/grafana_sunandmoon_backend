@@ -252,16 +252,23 @@ func (d *Datasource) GetLatLon(query backend.DataQuery) (float64, float64, error
 	if err != nil {
 		return 0, 0, fmt.Errorf("error unmarshalling query JSON: %v", err)
 	}
+	// Fallback
+	latitude := d.Latitude
+	longitude := d.Longitude
 
 	// Convert latitude and longitude from strings to float64
-	latitude, err := strconv.ParseFloat(qm.Latitude, 64)
-	if err != nil {
-		return 0, 0, fmt.Errorf("invalid latitude: %v", err)
+	if qm.Latitude != "" {
+		latitude, err = strconv.ParseFloat(qm.Latitude, 64)
+		if err != nil {
+			return 0, 0, fmt.Errorf("invalid latitude: %v", err)
+		}
 	}
 
-	longitude, err := strconv.ParseFloat(qm.Longitude, 64)
-	if err != nil {
-		return 0, 0, fmt.Errorf("invalid longitude: %v", err)
+	if qm.Longitude != "" {
+		longitude, err = strconv.ParseFloat(qm.Longitude, 64)
+		if err != nil {
+			return 0, 0, fmt.Errorf("invalid longitude: %v", err)
+		}
 	}
 
 	return latitude, longitude, nil

@@ -59,29 +59,6 @@ func TestQueryDataMoonAltitude(t *testing.T) {
 	assert.IsType(t, float64(0), valueField.At(0))
 }
 
-func TestGetLatLon(t *testing.T) {
-	// Initialize Datasource
-	ds := &plugin.Datasource{
-		Latitude:  45.0,
-		Longitude: 8.9718784,
-	}
-
-	// Create a sample backend.QueryDataRequest
-	query := backend.DataQuery{
-		JSON: []byte(`{"latitude": "50.0", "longitude": "9.0", "target": ["moon_illumination"]}`),
-	}
-
-	// Parse the query and check latitude/longitude overrides
-	lat, lon, err := ds.GetLatLon(query)
-
-	// Assert no error occurred
-	assert.NoError(t, err)
-
-	// Assert the overridden values are correct
-	assert.Equal(t, 50.0, lat)
-	assert.Equal(t, 9.0, lon)
-}
-
 func TestCheckHealth(t *testing.T) {
 	// Initialize Datasource with valid latitude and longitude
 	ds := &plugin.Datasource{
@@ -103,4 +80,50 @@ func TestCheckHealth(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, backend.HealthStatusError, resp.Status)
 	assert.Contains(t, resp.Message, "Latitude not in range")
+}
+
+func TestGetLatLon(t *testing.T) {
+	// Simulierte Datasource-Einstellungen mit Standardwerten für Latitude und Longitude
+	ds := &plugin.Datasource{
+		Latitude:  51.1657, // Default Latitude (z.B. Deutschland)
+		Longitude: 10.4515, // Default Longitude (z.B. Deutschland)
+	}
+
+	t.Run("should return default lat/lon when query has no overrides", func(t *testing.T) {
+		// Simulierte Query ohne Overrides
+		query := backend.DataQuery{
+			JSON: []byte(`{}`), // Keine Latitude/Longitude in der Query
+		}
+
+		lat, lon, err := ds.GetLatLon(query)
+		assert.NoError(t, err)
+
+		// Prüfe, dass die Default-Latitude und -Longitude der Datasource verwendet werden
+		assert.Equal(t, ds.Latitude, lat)
+		assert.Equal(t, ds.Longitude, lon)
+	})
+
+	t.Run("should use query overrides for lat/lon", func(t *testing.T) {
+		// Simulierte Query mit Overrides für Latitude und Longitude
+		query := backend.DataQuery{
+			JSON: []byte(`{"latitude": "40.7128", "longitude": "-74.0060"}`), // New York City Koordinaten
+		}
+
+		lat, lon, err := ds.GetLatLon(query)
+		assert.NoError(t, err)
+
+		// Prüfe, dass die Latitude/Longitude aus der Query verwendet werden
+		assert.Equal(t, 40.7128, lat)
+		assert.Equal(t, -74.0060, lon)
+	})
+
+	t.Run("should return an error for invalid lat/lon", func(t *testing.T) {
+		// Simulierte Query mit ungültigen Werten für Latitude und Longitude
+		query := backend.DataQuery{
+			JSON: []byte(`{"latitude": "invalid", "longitude": "invalid"}`),
+		}
+
+		_, _, err := ds.GetLatLon(query)
+		assert.Error(t, err)
+	})
 }
