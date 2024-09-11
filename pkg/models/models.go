@@ -21,11 +21,11 @@ type MetricConfig struct {
 	Decimals int
 }
 
-// AnnotationDefinition definiert eine Annotation mit Titel, Text und Tags.
+// AnnotationDefinition definiert eine Annotation mit Titel, Text und Tag.
 type AnnotationDefinition struct {
 	Title string
 	Text  string
-	Tags  []string
+	Tag   string
 }
 
 // SunAndMoonMetrics ist eine Map, die alle Metriken definiert.
@@ -96,91 +96,91 @@ var SunAndMoonAnnotations = map[string]AnnotationDefinition{
 	"sunrise": {
 		Title: "Sunrise",
 		Text:  "Top edge of the sun appears on the horizon",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"sunriseEnd": {
 		Title: "Sunrise ends",
 		Text:  "Bottom edge of the sun touches the horizon",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"goldenHourEnd": {
 		Title: "Morning golden hour ends",
 		Text:  "Soft light, best time for photography",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"solarNoon": {
 		Title: "Solar noon",
 		Text:  "Sun is in the highest position",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"goldenHour": {
 		Title: "Evening golden hour starts",
 		Text:  "Soft light, best time for photography",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"sunsetStart": {
 		Title: "Sunset starts",
 		Text:  "Bottom edge of the sun touches the horizon",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"sunset": {
 		Title: "Sunset",
 		Text:  "Sun disappears below the horizon, evening civil twilight starts",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"dusk": {
 		Title: "Dusk",
 		Text:  "Evening nautical twilight starts",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"nauticalDusk": {
 		Title: "Nautical dusk",
 		Text:  "Evening astronomical twilight starts",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"night": {
 		Title: "Night starts",
 		Text:  "Dark enough for astronomical observations",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"nadir": {
 		Title: "Nadir",
 		Text:  "Darkest moment of the night, sun is in the lowest position",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"nightEnd": {
 		Title: "Night ends",
 		Text:  "Morning astronomical twilight starts",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"nauticalDawn": {
 		Title: "Nautical dawn",
 		Text:  "Morning nautical twilight starts",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"dawn": {
 		Title: "Dawn",
 		Text:  "Morning nautical twilight ends, morning civil twilight starts",
-		Tags:  []string{"sun"},
+		Tag:   "sun",
 	},
 	"moonrise": {
 		Title: "Moonrise",
 		Text:  "Top edge of the moon appears on the horizon",
-		Tags:  []string{"moon"},
+		Tag:   "moon",
 	},
 	"moonset": {
 		Title: "Moonset",
 		Text:  "Moon disappears below the horizon",
-		Tags:  []string{"moon"},
+		Tag:   "moon",
 	},
 	"noon": {
 		Title: "Noon",
 		Text:  "12 o'clock in the daytime",
-		Tags:  []string{"time"},
+		Tag:   "time",
 	},
 	"midnight": {
 		Title: "Midnight",
 		Text:  "12 o'clock in the night",
-		Tags:  []string{"time"},
+		Tag:   "time",
 	},
 }

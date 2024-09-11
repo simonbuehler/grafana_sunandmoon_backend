@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"math"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/grafana/grafana-plugin-sdk-go/backend"
@@ -157,14 +156,11 @@ func (d *Datasource) QueryData(ctx context.Context, req *backend.QueryDataReques
 		// Process each annotation and add data to frames
 		if len(annotations) > 0 {
 			for _, annotation := range annotations {
-				frame := data.NewFrame(models.SunAndMoonAnnotations[annotation].Title)
-
-				// Initialize fields for Annotation Frame
-				frame.Fields = append(frame.Fields,
+				frame := data.NewFrame(models.SunAndMoonAnnotations[annotation].Title,
 					data.NewField("Time", nil, []time.Time{}),
 					data.NewField("Title", nil, []string{}),
 					data.NewField("Text", nil, []string{}),
-					data.NewField("Tags", nil, []string{}),
+					data.NewField("Tag", nil, []string{}),
 				)
 
 				// Iterate over each day in the time range
@@ -217,8 +213,7 @@ func (d *Datasource) QueryData(ctx context.Context, req *backend.QueryDataReques
 					// Check if eventTime is valid (not zero)
 					if !eventTime.IsZero() {
 						def := models.SunAndMoonAnnotations[annotation]
-						tagsString := strings.Join(def.Tags, ", ")
-						frame.AppendRow(eventTime, def.Title, def.Text, tagsString)
+						frame.AppendRow(eventTime, def.Title, def.Text, def.Tag)
 					}
 				}
 

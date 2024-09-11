@@ -4,15 +4,16 @@
   "name": "Sun and Moon Datasource Backend",
   "id": "simonbuehler-sunandmoon-datasource",
   "metrics": true,
+  "annotations": true,
   "backend": true,
-  "alerting": true,
   "executable": "gpx_sunandmoon",
   "info": {
     "description": "A Grafana plugin to display sun and moon metrics and events, supporting public dashboards with backend execution.",
     "author": {
-      "name": "Simon Bühler"
+      "name": "Simon Bühler",
+      "email": "simon@00010111.de"
     },
-    "keywords": ["sun", "moon", "datasource", "metrics", "backend"],
+    "keywords": ["sun", "moon", "altitude", "azimuth", "illumination", "distance", "backend"],
     "logos": {
       "small": "img/logo.svg",
       "large": "img/logo.svg"
