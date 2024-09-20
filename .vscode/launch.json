@@ -20,6 +20,7 @@
       "showLog": true,
       "trace": "log",
       "logOutput": "rpc",
+      "apiVersion": 2,
       "substitutePath": [
         {
           "from": "${workspaceFolder}",

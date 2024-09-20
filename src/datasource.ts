@@ -39,4 +39,11 @@ export class DataSource extends DataSourceWithBackend<SunAndMoonQuery, SunAndMoo
   filterQuery(query: SunAndMoonQuery): boolean {
     return Array.isArray(query.target) && query.target.length > 0;
   }
+
+  // Handle Annotation Queries
+  annotations = {
+    
+  };
+
+
 }

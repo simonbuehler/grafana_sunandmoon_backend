@@ -5,6 +5,7 @@
   "id": "simonbuehler-sunandmoon-datasource",
   "metrics": true,
   "annotations": true,
+  "alerting": false,
   "backend": true,
   "executable": "gpx_sunandmoon",
   "info": {
